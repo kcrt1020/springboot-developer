@@ -10,7 +10,6 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 
 @Getter
 public class JwtFactory {
@@ -40,7 +39,7 @@ public class JwtFactory {
                 .setIssuedAt(issueAt)
                 .setExpiration(expiration)
                 .addClaims(claims)
-                .signWith(SignatureAlgorithm.ES256, jwtProperties.getSecretKey())
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
 }
