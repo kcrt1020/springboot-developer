@@ -56,7 +56,8 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content);
+        final String author = "author";
+        final AddArticleRequest userRequest = new AddArticleRequest(author, title, content);
 
         // 객체 JSON으로 직렬화
         final String requestBody = objectMapper.writeValueAsString(userRequest);

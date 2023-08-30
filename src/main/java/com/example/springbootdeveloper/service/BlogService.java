@@ -17,8 +17,8 @@ public class BlogService {
     private final BlogRepository blogRepository;
     
     // 블로그 글 추가 메서드
-    public Article save (AddArticleRequest request){
-        return blogRepository.save(request.toEntity());
+    public Article save (AddArticleRequest request, String userName){
+        return blogRepository.save(request.toEntity(userName));
     }
 
     public List<Article> findAll() {
@@ -39,7 +39,7 @@ public class BlogService {
         Article article = blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not fount : " + id));
 
-        article.update(request.getTitle(), request.getContent());
+        article.update(request.getAuthor(), request.getTitle(), request.getContent());
 
         return article;
     }
