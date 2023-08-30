@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
@@ -39,13 +38,13 @@ public class Article {
     private String author;
 
     @Builder
-    public Article(String title, String content){
+    public Article(String author,String title, String content){
+        this.author = author;
         this.title = title;
         this.content = content;
     }
 
-    public void update(String author, String title, String content) {
-        this.author = author;
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
