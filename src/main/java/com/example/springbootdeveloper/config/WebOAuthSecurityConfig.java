@@ -3,7 +3,7 @@ package com.example.springbootdeveloper.config;
 import com.example.springbootdeveloper.config.jwt.TokenProvider;
 import com.example.springbootdeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.example.springbootdeveloper.config.oauth.OAuth2SuccessHandler;
-import com.example.springbootdeveloper.config.oauth.Oauth2UserCustomService;
+import com.example.springbootdeveloper.config.oauth.OAuth2UserCustomService;
 import com.example.springbootdeveloper.repository.RefreshTokenRepository;
 import com.example.springbootdeveloper.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizationSuccessHandler;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -26,7 +24,8 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @RequiredArgsConstructor
 @Configuration
 public class WebOAuthSecurityConfig {
-    private final Oauth2UserCustomService oAuth2UserCustomService;
+
+    private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
@@ -50,8 +49,8 @@ public class WebOAuthSecurityConfig {
         // 헤더를 확인할 커스텀 필터 추가
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        // 토큰 재발급 URL은 인증 없이 접근 가능하도록 설정. 나머지 API URL은 인증 필요
-        http.authorizeHttpRequests()
+
+        http.authorizeRequests()
                 .requestMatchers("/api/token").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
